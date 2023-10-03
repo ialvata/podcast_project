@@ -1,0 +1,27 @@
+After some trial and errors... Poetry is really not suitable/easy to manage the virtual env,
+so..
+First create a venv:
+    python3 -m venv /path/to/new/virtual/environment
+
+In your venv bin/activate script, add the following line:
+    PYTHONPATH="/path/to/root/level"
+    export PYTHONPATH
+
+After installing pytest, we may need to deactivate the venv and reactivate it again.
+    deactivate && source .env/bin/activate
+or just close VSCode and open it again.
+
+To install psycopg2, we first install:
+    sudo apt install libpq-dev python3-dev
+
+# Running the App
+To Activate our server app:
+        `uvicorn app.main:app --reload`
+    If you want to access the server app:
+        http://localhost:8000/
+
+
+Docker useful commands:
+    docker exec -ti mycontainer /bin/bash
+    docker logs mycontainer
+
