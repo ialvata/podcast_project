@@ -25,7 +25,6 @@ from api.routers import podcasts
 ##############################    Creatng FastAPI API   ##########################
 api = FastAPI()
 # api.add_resource(List_Episodes, '/list_episodes')
-# api.add_resource(List_Podcasts, '/list_podcasts')
 # api.add_resource(Download_Episodes, '/download_episodes')
 api.include_router(podcasts.router)
 
@@ -40,4 +39,4 @@ async def root():
 
 
 if __name__ == "__main__":
-    uvicorn.run(api, host="localhost", port=8001)
+    uvicorn.run("main:api", host="localhost", port=8001, reload=True)
