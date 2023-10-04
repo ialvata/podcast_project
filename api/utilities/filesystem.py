@@ -1,9 +1,5 @@
 import os
-if __name__!="__main__":
-    from .constants import *
-else:
-    from constants import *
-
+from constants import PROJ_PATH, podcast_list
 import json
 
 
@@ -32,8 +28,3 @@ def initialize_podcast_json():
         with open(file_path, "w") as write_file:
             json.dump(podcast_list, write_file) 
             # podcast_list is imported from constants
-
-if __name__=="__main__":
-    initialize_podcast_json()
-    name = "Concordance des Temps"
-    get_info_podcast(name) == {'folder': '/home/ivo/Programmin..._des_temps', 'url': 'https://www.radiofra...-des-temps', 'name': 'Concordance des Temps'}

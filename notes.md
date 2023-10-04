@@ -16,7 +16,7 @@ To install psycopg2, we first install:
 
 # Running the App
 To Activate our server app:
-        `uvicorn app.main:app --reload`
+        `uvicorn api.main:api --reload`
     If you want to access the server app:
         http://localhost:8000/
 
