@@ -11,10 +11,14 @@ After installing pytest, we may need to deactivate the venv and reactivate it ag
     deactivate && source .env/bin/activate
 or just close VSCode and open it again.
 
-To install psycopg2, we first install:
-    sudo apt install libpq-dev python3-dev
+To use PostgreSQL db, we'll need to run
+    `sudo apt install libpq-dev python3-dev`
+and
+    `pip install psycopg2`
 
 # Running the App
+To activate the PostgreSQL container:
+    `docker compose up`
 To Activate our server app:
         `uvicorn api.main:api --reload`
     If you want to access the server app:
