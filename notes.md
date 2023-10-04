@@ -24,6 +24,12 @@ To Activate our server app:
     If you want to access the server app:
         http://localhost:8000/
 
+PGAdmin4 container
+- http://localhost:5050/  #the port may be overwritten in .env.local.db file
+- The admin user is root.
+- Alpine container, hence we use apk instead of apt
+- docker cp database/server.json pgadmin4_container:/pgadmin4
+- docker exec -it --user root  pgadmin4_container /bin/sh
 
 Docker useful commands:
     docker exec -ti mycontainer /bin/bash

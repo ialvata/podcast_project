@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  podcast_db:
+    image: postgres:15.3-alpine
+    container_name: podcast_db
+    ports:
+      - 5432:5432
+    volumes:
+      - podcast_db_data:/usr/share/podcast_db/data
+    env_file:
+      - ./database/.env.local.db
+    # instead, we could have created a `environment` section, with
+    # with the env vars in .env.local.db file.
+  podcast_pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    ports:
+      - 5050:80
+    env_file:
+      - ./database/.env.local.db
+    command:
+      - echo 'HELLLLOOOOOOOOOOOOOOOOO!!!!!!!!!!!!''
+      # sh -c "/venv/bin/python3 setup.py --load-servers server.json"
+
+
+volumes:
+  podcast_db_data:
