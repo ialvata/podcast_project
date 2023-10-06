@@ -29,9 +29,11 @@ PGAdmin4 container
 - The admin user is root.
 - Alpine container, hence we use apk instead of apt
 - docker cp database/server.json pgadmin4_container:/pgadmin4
-- docker exec -it --user root  pgadmin4_container /bin/sh
-
+- docker exec -it --user root  pgadmin4 /bin/sh
 Docker useful commands:
-    docker exec -ti mycontainer /bin/bash
-    docker logs mycontainer
+    - docker cp [container_name:]/path/to/source [container_name:]/path/to/destiny
+        With no container name, it will assume to be referring to the local machine's 
+        filesystem.
+    - docker exec -ti mycontainer /bin/bash
+    - docker logs mycontainer
 

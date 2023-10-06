@@ -12,16 +12,21 @@ services:
     # instead, we could have created a `environment` section, with
     # with the env vars in .env.local.db file.
   podcast_pgadmin:
-    image: dpage/pgadmin4
+    image: podcast_pgadmin4
+    build:
+      context: dockerfiles/pgadmin4
+      dockerfile: ./pgadmin.dockerfile
     container_name: pgadmin4_container
     ports:
       - 5050:80
     env_file:
       - ./database/.env.local.db
+    depends_on:
+      - podcast_db
+    # entrypoint: [ "sh", "-c", "sleep 10 && /venv/bin/python3 setup.py --load-servers /pgadmin4/server.json"]
     command:
-      - echo 'HELLLLOOOOOOOOOOOOOOOOO!!!!!!!!!!!!''
-      # sh -c "/venv/bin/python3 setup.py --load-servers server.json"
-
-
+      - "sleep 10 && /venv/bin/python3 setup.py --load-servers /pgadmin4/server.json"
+    # The entrypoint and command sections only run commands inside the container.
+    # running /venv/bin/python3 setup.py --load-servers server.json 
 volumes:
   podcast_db_data:

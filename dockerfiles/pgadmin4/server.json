@@ -1,0 +1,13 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "postgres_db_name_fake",
+            "Group": "Servers",
+            "Port": 5432,
+            "Username": "postgres_user_fake",
+            "Host": "podcast_db",
+            "SSLMode": "prefer",
+            "MaintenanceDB": "postgres"
+        }
+    }
+}
