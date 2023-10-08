@@ -1,0 +1,13 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "postgres_db",
+            "Group": "Servers",
+            "Port": 5432,
+            "Username": "postgres_user",
+            "Host": "podcast_db",
+            "SSLMode": "prefer",
+            "MaintenanceDB": "postgres"
+        }
+    }
+}

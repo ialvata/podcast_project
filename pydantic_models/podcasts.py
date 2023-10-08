@@ -1,10 +1,11 @@
 from pydantic import BaseModel
-from pathlib import PosixPath
+from pathlib import Path
 
 class Podcast(BaseModel):
     """
     Pydantic class that represents a Podcast
     """
-    folder: PosixPath
+    title: str
     url: str
-    name: str
+    folder: str
+    language: str

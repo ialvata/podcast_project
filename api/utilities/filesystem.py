@@ -1,5 +1,5 @@
 import os
-from constants import PROJ_PATH, podcast_list
+from constants import PROJ_PATH, podcasts_dict
 import json
 
 
@@ -26,5 +26,5 @@ def initialize_podcast_json():
     file_path = os.path.join(PROJ_PATH,"data","db","podcast_list.json")
     if not folder_Q(file_path):
         with open(file_path, "w") as write_file:
-            json.dump(podcast_list, write_file) 
+            json.dump(podcasts_dict, write_file) 
             # podcast_list is imported from constants

@@ -19,21 +19,25 @@ podcasts_dict = {
     "affaires":{
         "folder":folder_path_affaires,
         "url":URL_AFFAIRES,
-        "name":"Affaires Étrangères"
+        "title":"Affaires Étrangères",
+        "language": "french"
     },
     "concordance":{
         "folder":folder_path_concordance,
         "url":URL_CONCORDANCE,
-        "name":"Concordance des Temps"
+        "title":"Concordance des Temps",
+        "language": "french"
     },
     "culture":{
         "folder":folder_path_culture,
         "url":URL_CULTURE,
-        "name":"Cultures Monde"
+        "title":"Cultures Monde",
+        "language": "french"
     },
     "eco":{
         "folder":folder_path_eco,
         "url":URL_ECO,
-        "name":"Entendez-vous l'éco?"
+        "title":"Entendez-vous l'éco?",
+        "language": "french"
     },     
 }
