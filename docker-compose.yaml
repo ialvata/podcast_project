@@ -9,8 +9,6 @@ services:
       - podcast_db_data:/usr/share/podcast_db/data
     env_file:
       - ./database/.env.local.db
-    # instead, we could have created a `environment` section, with
-    # with the env vars in .env.local.db file.
   podcast_pgadmin:
     image: podcast_pgadmin4
     build:
@@ -23,10 +21,5 @@ services:
       - ./database/.env.local.db
     depends_on:
       - podcast_db
-    # entrypoint: [ "sh", "-c", "sleep 10 && /venv/bin/python3 setup.py --load-servers /pgadmin4/server.json"]
-    command:
-      - "sleep 10 && /venv/bin/python3 setup.py --load-servers /pgadmin4/server.json"
-    # The entrypoint and command sections only run commands inside the container.
-    # running /venv/bin/python3 setup.py --load-servers server.json 
 volumes:
   podcast_db_data:

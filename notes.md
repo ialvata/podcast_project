@@ -36,4 +36,6 @@ Docker useful commands:
         filesystem.
     - docker exec -ti mycontainer /bin/bash
     - docker logs mycontainer
+    - docker inspect --format '{{json .Config}}' <image_name_or_id>
+    - docker run -e PGADMIN_DEFAULT_EMAIL="admin" -e PGADMIN_DEFAULT_PASSWORD="admin" mycontainer
 
