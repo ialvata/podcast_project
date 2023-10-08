@@ -168,14 +168,20 @@ if __name__ == "__main__":
     # db = PostgresDB(filename="Asdasd") # raises error
     db.connect()
     db.execute(
-            """
-            CREATE TABLE posts (
-                id serial PRIMARY KEY,
-                title varchar NOT NULL,
-                content varchar,
-                published boolean DEFAULT true,
-                created_at TIMESTAMP DEFAULT now()
-            );
-            """
+        """
+        SELECT *
+        FROM podcasts
+        """
     )
+    # db.execute(
+    #         """
+    #         CREATE TABLE posts (
+    #             id serial PRIMARY KEY,
+    #             title varchar NOT NULL,
+    #             content varchar,
+    #             published boolean DEFAULT true,
+    #             created_at TIMESTAMP DEFAULT now()
+    #         );
+    #         """
+    # )
     # db.execute("""DROP TABLE posts;""")
