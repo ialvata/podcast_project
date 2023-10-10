@@ -20,7 +20,7 @@ and
 To activate the PostgreSQL container:
     `docker compose up`
 To Activate our server app:
-        `uvicorn api.main:api --reload`
+        `uvicorn api.main:api --port 8001 --reload`
     If you want to access the server app:
         http://localhost:8000/
 
