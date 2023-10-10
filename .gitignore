@@ -1,4 +1,4 @@
 # venv
-.env_podcast
+.env_podcast*
 
 __pycache__
