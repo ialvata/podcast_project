@@ -12,12 +12,12 @@ from database.connecting_orm import database_gen
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from database.schemas import Podcasts as Podcasts_SQL
-
+from sqlalchemy import and_, or_
 
 router = APIRouter(prefix="/podcasts", tags=["Podcasts"])
 @router.get('/', 
             status_code=status.HTTP_200_OK, 
-            response_model=list[Podcast_Pydantic]
+            response_model=list[Podcast_Pydantic_Out]
 )
 async def list_podcasts(
     num_posts: int = 10,
@@ -34,7 +34,7 @@ async def list_podcasts(
 
     podcasts_list = [
         # row.t is a tuple whose 1st element is a schema instance
-        Podcast_Pydantic.from_schema_to_pydantic(row.t[0])
+        Podcast_Pydantic_Out.from_schema_to_pydantic(row.t[0])
         for row in db_session.execute(stmt)
     ]
     # for dict, we could try
@@ -46,7 +46,7 @@ async def list_podcasts(
     return podcasts_list
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=Podcast_Pydantic_Out)
-def add_podcast(
+async def add_podcast(
     payload: Podcast_Pydantic,
     db_session: Session = Depends(database_gen)
 ):
@@ -83,3 +83,40 @@ def add_podcast(
             f"A podcast with title = {new_podcast.title}, "
             f"or url = {new_podcast.url}, already exists!",
         )
+    
+@router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_podcast(
+    identifier: Optional[int] = None,
+    url: Optional[str] = None,
+    title: Optional[str] = None,
+    db_session: Session = Depends(database_gen),
+):
+    """
+    Function that creates the resource to delete a specified post, by identifier.
+    """
+    if identifier is None and url is None and title is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"No criteria to delete podcasts was given!",
+        )
+    stmt =(
+        select(Podcasts_SQL)
+        .where(
+            or_(Podcasts_SQL.title == title,
+            Podcasts_SQL.url == url,
+            Podcasts_SQL.id == identifier)
+        )
+    )
+    podcasts_list = [
+        # row.t is a tuple whose 1st element is a schema instance
+        row.t[0]
+        for row in db_session.execute(stmt)
+    ]
+    if podcasts_list == []:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"No podcasts, for the criteria given, were found!",
+        )
+    for podcast_delete in podcasts_list:
+        db_session.delete(podcast_delete)
+    db_session.commit()

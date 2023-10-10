@@ -18,6 +18,7 @@ class Podcast(BaseModel):
             title=podcast.title, url=podcast.url, folder=podcast.folder,
             language=podcast.language
         )
+
 class PodcastOut(Podcast):
     """
     Pydantic class that represents a Podcast
@@ -25,6 +26,13 @@ class PodcastOut(Podcast):
     id: int
     created_at: datetime.datetime
     
+    @classmethod
+    def from_schema_to_pydantic(cls,podcast:Podcasts)-> "PodcastOut":
+        return PodcastOut(
+            title=podcast.title, url=podcast.url, folder=podcast.folder,
+            language=podcast.language,id=podcast.id, created_at=podcast.created_at
+        )
+
     class Config:
         """
         Behaviour of pydantic can be controlled via the Config class on a model
