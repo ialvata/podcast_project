@@ -2,10 +2,10 @@ from pathlib import Path
 import os
 PROJ_PATH = Path('.').cwd()
 PROJ_DATA = PROJ_PATH/"data"
-folder_path_affaires = PROJ_DATA/"affaires_etrangeres"
-folder_path_concordance = PROJ_DATA/"concordance_des_temps"
-folder_path_culture = PROJ_DATA /"culture_monde"
-folder_path_eco = PROJ_DATA/"entendez_eco"
+FOLDER_PATH_AFFAIRES = str(PROJ_DATA/"affaires_etrangeres")
+FOLDER_PATH_CONCORDANCE = str(PROJ_DATA/"concordance_des_temps")
+FOLDER_PATH_CULTURE = str(PROJ_DATA /"culture_monde")
+FOLDER_PATH_ECO = str(PROJ_DATA/"entendez_eco")
 
 # .env is located in the project root directory
 
@@ -17,25 +17,25 @@ URL_ECO = "https://www.radiofrance.fr/franceculture/podcasts/entendez-vous-l-eco
 
 podcasts_dict = {
     "affaires":{
-        "folder":folder_path_affaires,
+        "folder":FOLDER_PATH_AFFAIRES,
         "url":URL_AFFAIRES,
         "title":"Affaires Étrangères",
         "language": "french"
     },
     "concordance":{
-        "folder":folder_path_concordance,
+        "folder":FOLDER_PATH_CONCORDANCE,
         "url":URL_CONCORDANCE,
         "title":"Concordance des Temps",
         "language": "french"
     },
     "culture":{
-        "folder":folder_path_culture,
+        "folder":FOLDER_PATH_CULTURE,
         "url":URL_CULTURE,
         "title":"Cultures Monde",
         "language": "french"
     },
     "eco":{
-        "folder":folder_path_eco,
+        "folder":FOLDER_PATH_ECO,
         "url":URL_ECO,
         "title":"Entendez-vous l'éco?",
         "language": "french"

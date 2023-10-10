@@ -6,7 +6,7 @@ from __future__ import annotations
 import datetime
 
 from sqlalchemy import TIMESTAMP
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column # type: ignore
 from sqlalchemy.sql.expression import text
 
 # from typing import List
@@ -57,6 +57,4 @@ class Podcasts(Base):
     )
 
     def __repr__(self) -> str:
-        return f"Post(id = {self.id}, username = {self.username})"
-
-
+        return f"Podcast(id = {self.id}, title = {self.title})"
