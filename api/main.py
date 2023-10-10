@@ -7,18 +7,21 @@ import asyncio
 import uvicorn
 from fastapi import FastAPI
 from api.routers import podcasts
-# from db import schemas
+from database import schemas
+from database.connecting_orm import database_gen, engine
+from database.utilities import init_db
+
 # from db.db_orm import database_gen, engine
 # from db.db_utils import init_db, stream_mocker
 # from db.repository import PostgresDB
 
 #####################    Creating some initial data in Postgres db    #######################
-# print(f"Creating tables in {schemas.Base}")
-# # Base.metadate.create_all should be always in the main.py, from where we run the app.
-# schemas.Base.metadata.create_all(bind=engine, checkfirst=True)
-# get_initial_db = next(database_gen())
-# if get_initial_db.query(schemas.Post).all() == []:
-#     init_db(schemas.Base, engine, get_initial_db)
+print(f"Creating Podcasts table in {schemas.Base}")
+# Base.metadate.create_all should be always in the main.py, from where we run the app.
+schemas.Base.metadata.create_all(bind=engine, checkfirst=True)
+get_initial_db = next(database_gen())
+if get_initial_db.query(schemas.Podcasts).all() == []:
+    init_db(get_initial_db)
 
 
 
