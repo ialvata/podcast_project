@@ -28,7 +28,13 @@ PGAdmin4 container is launched automatically by docker compose command.
     - http://localhost:5050/  #the port may be overwritten in .env.local.db file
     - The admin user is root.
     - The Postgres db is automatically added. When you access pgadmin website, you only need to 
-    introduce the db's password, which was defined in the environmental configuration file. 
+    introduce the db's password, which was defined in the environmental configuration file.
+MongoDB
+    - http://localhost:27017/
+MongoExpress
+    - http://localhost:8081/
+    - Credentials to access above are "admin:pass", even though I changed them in the 
+    environmental file. Probably a minor bug in the container...
 Docker useful commands:
     - docker cp [container_name:]/path/to/source [container_name:]/path/to/destiny
         With no container name, it will assume to be referring to the local machine's 
