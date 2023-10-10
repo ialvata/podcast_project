@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import datetime
 
-from sqlalchemy import TIMESTAMP
+from sqlalchemy import TIMESTAMP, ForeignKey,Integer
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column # type: ignore
 from sqlalchemy.sql.expression import text
 
@@ -58,3 +58,25 @@ class Podcasts(Base):
 
     def __repr__(self) -> str:
         return f"Podcast(id = {self.id}, title = {self.title})"
+    
+class Episodes(Base):
+    __tablename__ = "episodes"
+    podcast_title: Mapped[str] = mapped_column(
+        ForeignKey("podcasts.title", ondelete="CASCADE"),
+        primary_key=True,
+        nullable=False,
+    )
+    podcast_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("podcasts.id", ondelete="CASCADE"),
+        primary_key=True,
+        nullable=False,
+    )
+    title: Mapped[str] = mapped_column()
+    description: Mapped[str] = mapped_column()
+    url_audio: Mapped[str] = mapped_column()
+    date: Mapped[datetime.datetime] = mapped_column()
+    director: Mapped[str] = mapped_column()
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        nullable=False, server_default=text("now()")
+    )
