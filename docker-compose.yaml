@@ -6,9 +6,10 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - podcast_db_data:/usr/share/podcast_db/data
+      - podcast_postgres_data:/usr/share/podcast_postgres/data
     env_file:
       - ./database/.env.local.db
+
   podcast_pgadmin:
     image: podcast_pgadmin4
     build:
@@ -31,7 +32,7 @@ services:
     env_file:
       - ./database/.env.local.db
     volumes:
-      - podcast_mongo_data:/usr/share/podcast_db/data
+      - podcast_mongo_data:/usr/share/podcast_mongo/data
 
   mongo-express:
     image: mongo-express
@@ -44,5 +45,5 @@ services:
       - mongo
 
 volumes:
-  podcast_db_data:
+  podcast_postgres_data:
   podcast_mongo_data:
