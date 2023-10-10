@@ -21,5 +21,28 @@ services:
       - ./database/.env.local.db
     depends_on:
       - podcast_db
+
+  mongo:
+    image: mongo
+    restart: always
+    container_name: podcast_mongo
+    ports:
+      - 27017:27017
+    env_file:
+      - ./database/.env.local.db
+    volumes:
+      - podcast_mongo_data:/usr/share/podcast_db/data
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    env_file:
+      - ./database/.env.local.db
+    depends_on:
+      - mongo
+
 volumes:
   podcast_db_data:
+  podcast_mongo_data:
