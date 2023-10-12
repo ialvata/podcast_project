@@ -5,51 +5,15 @@ I would usually separate into different modules the parent class from the subcla
 this situation the number of code lines is too few to justify it...
 """
 from configparser import ConfigParser
-from typing import Protocol, runtime_checkable
-
+from typing import Optional
 import psycopg2
-from pydantic import BaseModel
-
 from database.exceptions import (
     ConfigEmptyError,
     ConfigFormatError,
     ConnectFirstError,
     CursorNoneError,
 )
-
-
-class ConfigDB(BaseModel):
-    """
-    class representing the configuration for the db.
-    """
-
-    host: str = "localhost"
-    database: str | int | None = None
-    user: str | None = None
-    password: str | None = None
-    port: str = "5432"
-
-
-@runtime_checkable
-class DataBase(Protocol):
-    """
-    Super class for all database classes
-    """
-
-    def __init__(
-        self,
-        config: ConfigDB,
-        filename: str | None = None,
-        section: str | None = None,
-    ):
-        """method docstring"""
-
-    def connect(self):
-        """method docstring"""
-
-    def execute(self, sql_command: str, values: tuple[str, ...] | None = None):
-        """method docstring"""
-
+from database.db_basetype import ConfigDB, DataBase
 
 class PostgresDB:
     """
@@ -92,9 +56,15 @@ class PostgresDB:
         self.cursor = None
         self.datasource_settings = {}
 
-    def connect(self):
+    def connect(self, database:Optional[str] = None):
         """
         Connect to the PostgreSQL database server
+
+        Parameters
+        ----------
+            database:Optional[str]
+                This parameter is not used for PostgresDB. It's here to keep the same interface
+                accross all database type classes.
 
         ## Example usage:
         database = PostgresDB(filename="./db/database.ini", section="postgresql")
