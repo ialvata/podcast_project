@@ -9,13 +9,13 @@ class Podcast(BaseModel):
     """
     title: str
     url: str
-    folder: str
+    publisher: str
     language: str
 
     @classmethod
     def from_schema_to_pydantic(cls,podcast:Podcasts)-> "Podcast":
         return Podcast(
-            title=podcast.title, url=podcast.url, folder=podcast.folder,
+            title=podcast.title, url=podcast.url, publisher=podcast.publisher,
             language=podcast.language
         )
 
@@ -29,7 +29,7 @@ class PodcastOut(Podcast):
     @classmethod
     def from_schema_to_pydantic(cls,podcast:Podcasts)-> "PodcastOut":
         return PodcastOut(
-            title=podcast.title, url=podcast.url, folder=podcast.folder,
+            title=podcast.title, url=podcast.url, publisher=podcast.publisher,
             language=podcast.language,id=podcast.id, created_at=podcast.created_at
         )
 

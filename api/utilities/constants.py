@@ -17,25 +17,25 @@ URL_ECO = "https://www.radiofrance.fr/franceculture/podcasts/entendez-vous-l-eco
 
 podcasts_dict = {
     "affaires":{
-        "folder":FOLDER_PATH_AFFAIRES,
+        "publisher":"France Culture",
         "url":URL_AFFAIRES,
         "title":"Affaires Étrangères",
         "language": "french"
     },
     "concordance":{
-        "folder":FOLDER_PATH_CONCORDANCE,
+        "publisher":"France Culture",
         "url":URL_CONCORDANCE,
         "title":"Concordance des Temps",
         "language": "french"
     },
     "culture":{
-        "folder":FOLDER_PATH_CULTURE,
+        "publisher":"France Culture",
         "url":URL_CULTURE,
         "title":"Cultures Monde",
         "language": "french"
     },
     "eco":{
-        "folder":FOLDER_PATH_ECO,
+        "publisher":"France Culture",
         "url":URL_ECO,
         "title":"Entendez-vous l'éco?",
         "language": "french"

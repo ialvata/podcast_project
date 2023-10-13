@@ -24,7 +24,7 @@ def init_db(db_session: Session):
         Podcasts_Pydantic(
             title=podcast["title"],
             url=podcast["url"],
-            folder=str(podcast["folder"]),
+            publisher=str(podcast["publisher"]),
             language=podcast["language"]
         )
         for podcast in podcasts_dict.values()
