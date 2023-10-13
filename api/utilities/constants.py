@@ -90,5 +90,17 @@ episodes_list = [
         "director":"Julie Gacon",
         "url_audio":"https://media.radiofrance-podcast.net/podcast09/11701-10.10.2023-ITEMA_\
             23514637-2023C16756S0283-21.mp3"
-    },     
+    },
+    {
+        "podcast_title":"Affaires Étrangères",
+        "title":"Batteries et voitures électriques : l'Europe face à la Chine",
+        "description":"Les batteries électriques sont au cœur de la bataille géo-économique \
+            mondiale. Les enjeux sont tels qu’il ne s’agit plus seulement de rivalité \
+                industrielle, mais bien de sécurité nationale pour les grands pays concernés. \
+                    La Chine fait la course en tête. ",
+        "date":"2023-10-02T09:00:00.000Z",
+        "director":"Christine Ockrent",
+        "url_audio":"https://media.radiofrance-podcast.net/podcast09/12841-30.09.2023-ITEMA\
+            _23504396-2023C20675E0008-21.mp3"
+    }, 
 ]
