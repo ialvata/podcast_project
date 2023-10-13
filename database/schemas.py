@@ -49,7 +49,7 @@ class Podcasts(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True, nullable=False)
     title: Mapped[str] = mapped_column(unique=True, nullable=False)
     url: Mapped[str] = mapped_column()
-    folder: Mapped[str] = mapped_column()
+    publisher: Mapped[str] = mapped_column()
     language: Mapped[str] = mapped_column()
     created_at: Mapped[datetime.datetime] = mapped_column(
         nullable=False, server_default=text("now()")

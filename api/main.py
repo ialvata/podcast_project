@@ -10,6 +10,7 @@ from api.routers import podcasts, episodes
 from database import schemas
 from database.connecting_orm import database_gen, engine
 from database.utilities import init_db
+from scrappers.france_culture import scrape_france_culture
 
 # from db.db_orm import database_gen, engine
 # from db.db_utils import init_db, stream_mocker
@@ -22,8 +23,7 @@ schemas.Base.metadata.create_all(bind=engine, checkfirst=True)
 get_initial_db = next(database_gen())
 if get_initial_db.query(schemas.Podcasts).all() == []:
     init_db(get_initial_db)
-
-
+scrape_france_culture(get_initial_db)
 
 ##############################    Creatng FastAPI API   ##########################
 api = FastAPI()
