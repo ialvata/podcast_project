@@ -65,15 +65,9 @@ class Episodes(Base):
     __tablename__ = "episodes"
     podcast_title: Mapped[str] = mapped_column(
         ForeignKey("podcasts.title", ondelete="CASCADE"),
-        primary_key=True,
         nullable=False,
     )
-    podcast_id: Mapped[int] = mapped_column(
-        Integer,
-        ForeignKey("podcasts.id", ondelete="CASCADE"),
-        primary_key=True,
-        nullable=False,
-    )
+    id: Mapped[int] = mapped_column(primary_key=True, index=True, nullable=False)
     title: Mapped[str] = mapped_column()
     description: Mapped[str] = mapped_column()
     url_audio: Mapped[str] = mapped_column()

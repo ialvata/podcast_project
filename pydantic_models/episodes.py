@@ -5,8 +5,9 @@ import datetime
 
 class Episode(BaseModel):
     """
-    Pydantic class that represents a Podcast
+    Pydantic class that represents an Episode
     """
+    podcast_title: str
     title: str
     description: str
     url_audio: str
@@ -15,10 +16,9 @@ class Episode(BaseModel):
 
 class EpisodeOut(Episode):
     """
-    Pydantic class that represents a Podcast
+    Pydantic class that represents an Episode, with data specific from Postgres db.
     """
-    podcast_title: str
-    podcast_id: int
+    id: int
     created_at: datetime.datetime
     
     @classmethod
@@ -29,7 +29,7 @@ class EpisodeOut(Episode):
             date=episode.date,
             description=episode.description,
             director=episode.director,
-            podcast_id=episode.podcast_id, 
+            id=episode.id, 
             podcast_title=episode.podcast_title,
             created_at=episode.created_at
         )
