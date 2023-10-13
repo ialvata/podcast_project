@@ -19,23 +19,26 @@ router = APIRouter(prefix="/episodes", tags=["Episodes"])
             response_model=list[EpisodeOut]
 )
 async def list_episodes(
-    podcast_title:str, 
+    podcast_title:Optional[str] = None, 
     max_episodes_per_request: int = 10,
     offset_pagination: int = 0,
     search_episode_title: Optional[str] = None,
     db_session: Session = Depends(database_gen),
 ):
-    if search_episode_title is not None:
-        stmt =(
-            select(Episodes_SQL)
-            .where(Episodes_SQL.title.contains(search_episode_title))
-            .limit(max_episodes_per_request)
-            .offset(offset_pagination)
+    conditions = []
+    if search_episode_title is None and podcast_title is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=
+            f"Absence of criteria! Either give podcast_title or search_episode_title.",
         )
-    else:
-        stmt =(
+    if search_episode_title is not None:
+        conditions = conditions + [Episodes_SQL.title.contains(search_episode_title)]
+    if podcast_title is not None:
+        conditions = conditions + [Episodes_SQL.podcast_title==podcast_title]
+    stmt =(
             select(Episodes_SQL)
-            .where(Episodes_SQL.podcast_title==podcast_title)
+            .where(*conditions)
             .limit(max_episodes_per_request)
             .offset(offset_pagination)
         )
