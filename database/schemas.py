@@ -45,10 +45,9 @@ class Podcasts(Base):
     """
     Class responsible for the `Podcasts` table in the PostgreSQL DB
     """
-
     __tablename__ = "podcasts"
     id: Mapped[int] = mapped_column(primary_key=True, index=True, nullable=False)
-    title: Mapped[str] = mapped_column()
+    title: Mapped[str] = mapped_column(unique=True, nullable=False)
     url: Mapped[str] = mapped_column()
     folder: Mapped[str] = mapped_column()
     language: Mapped[str] = mapped_column()
@@ -60,6 +59,9 @@ class Podcasts(Base):
         return f"Podcast(id = {self.id}, title = {self.title})"
     
 class Episodes(Base):
+    """
+    Class responsible for the `Episodes` table in the PostgreSQL DB
+    """
     __tablename__ = "episodes"
     podcast_title: Mapped[str] = mapped_column(
         ForeignKey("podcasts.title", ondelete="CASCADE"),
