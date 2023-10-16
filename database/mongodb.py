@@ -9,13 +9,26 @@ from database.exceptions import (
     ConfigEmptyError,
     ConfigFormatError,
     ConnectFirstError,
-    CursorNoneError,
 )
-from pymongo import MongoClient
-from typing import Optional
+from pymongo import MongoClient, DESCENDING,ASCENDING
+from typing import Optional,Any
 
 from database.db_basetype import ConfigDB, DataBase
+from pymongo.database import Database as PyMongo_Database
+from pymongo.errors import BulkWriteError
 
+#####################                 Decorators                   ############################
+def check_connection(class_method):
+    """
+    Decorator to check whether we've established a connection to a MongoDB database, or not.
+    """
+    def wrapper(*args, **kwargs):
+        if not isinstance(args[0].conn, MongoClient):
+            raise ConnectFirstError()
+        else:
+            class_method(*args, **kwargs)
+        
+    return wrapper
 
 class MongoDB:
     type = "mongodb"
@@ -52,11 +65,11 @@ class MongoDB:
             self.config = config
         if not hasattr(self, "config"):
             raise ConfigEmptyError
-        self.conn = None
+        self.conn = None  # type: ignore
         self.datasource_settings = {}
         self.current_db = None
 
-    def connect(self, database: Optional[str] = None):
+    def connect(self) -> None:
         """
         Connect to the MongoDB database server
 
@@ -78,37 +91,60 @@ class MongoDB:
         except Exception as error: # to be altered
             print(error)
             raise error
-        # connect to the MongoDB server
-        print(f"Connecting to MongoDB database with name {database}")
-        # self.current_db = self.conn[f"{database}"]
-        return self.conn[f"{database}"]
     
     def execute(self, sql_command: str, values: tuple[str, ...] | None = None):...
+    
+    @check_connection
+    def send_files(self, database:str, collection:str, list_files:list[dict[str,Any]]):
+        self.conn:MongoClient
+        self.current_db = PyMongo_Database(client= self.conn, name= database)
+        if list_files == []:
+            raise Exception(
+                "No document to send to MongoDB"
+                f"or all documents are already in MongoDB {self.current_db.name}.{collection}"
+            )
+        self.current_db.get_collection(collection).create_index(
+            [("episode_url", DESCENDING)], unique = True
+        )
+        print(
+            f"We have {self.current_db.get_collection(collection).count_documents({})}"
+            f" documents in MongoDB {self.current_db.name}.{collection}"
+        )
+        try:
+            self.current_db.get_collection(collection).insert_many(list_files)
+            print(
+                f"We have {self.current_db.get_collection(collection).count_documents({})}"
+                f" documents in MongoDB {self.current_db.name}.{collection}"
+            )
+        except BulkWriteError as error:
+            # pymongo throws an error on 1st doc to create a write clash,
+            # so data after index may not have been added yet.
+            index_already_in_db = error.details["writeErrors"][0]["index"]
+            # recursive call to send remaining data.
+            self.send_files(database, collection, list_files[index_already_in_db+1:])
+
 
 
 
 if __name__ == "__main__":
     import datetime
     post_1 = {
-        "author": "Mike",
+        "episode_url": "mike.com",
         "text": "My first blog post!",
         "tags": ["mongodb", "python", "pymongo"],
         "date": datetime.datetime.now(tz=datetime.timezone.utc),
     }
     post_2 = {
-        "author": "John",
+        "episode_url": "john.com",
         "text": "My 2nd blog post!",
         "tags": ["mongodb", "python", "pymongo"],
         "date": datetime.datetime.now(tz=datetime.timezone.utc),
     }
     db = MongoDB(filename="./database/database.ini", section="mongodb")
     print(isinstance(db, DataBase))  # True
-    # db = PostgresDB(filename="Asdasd") # raises error
-    mongodb = db.connect("podcasts")
-    print(mongodb.my_episodes.count_documents({})) # 0
-    mongodb.my_episodes.insert_many([post_1])
-    print(mongodb.my_episodes.count_documents({})) # 1
-    print(mongodb.my_episodes.insert_many([post_2]))
-    print(mongodb.my_episodes.count_documents({})) # 2
-    print(mongodb.my_episodes.delete_many({}))
-    print(mongodb.my_episodes.count_documents({})) # 0
+    db.connect()
+    db.send_files(database="test_database",collection="episodes",
+                  list_files= [post_1,post_1, post_2])
+    print("OLA")
+    # print(mongodb.my_episodes.delete_many({}))
+    # print(mongodb.my_episodes.count_documents({})) # 0
