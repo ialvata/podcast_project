@@ -99,9 +99,9 @@ class MongoDB:
         self.conn:MongoClient
         self.current_db = PyMongo_Database(client= self.conn, name= database)
         if list_files == []:
-            raise Exception(
+            print(
                 "No document to send to MongoDB"
-                f"or all documents are already in MongoDB {self.current_db.name}.{collection}"
+                f" or some documents are already in MongoDB {self.current_db.name}.{collection}"
             )
         self.current_db.get_collection(collection).create_index(
             [("episode_url", DESCENDING)], unique = True

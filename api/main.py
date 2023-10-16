@@ -11,6 +11,8 @@ from database import schemas
 from database.connecting_orm import database_gen, engine
 from database.utilities import init_db
 from scrappers.france_culture import scrape_france_culture
+from database.mongodb import MongoDB
+from pymongo.database import Database
 
 # from db.db_orm import database_gen, engine
 # from db.db_utils import init_db, stream_mocker
@@ -23,7 +25,13 @@ schemas.Base.metadata.create_all(bind=engine, checkfirst=True)
 get_initial_db = next(database_gen())
 if get_initial_db.query(schemas.Podcasts).all() == []:
     init_db(get_initial_db)
-scrape_france_culture(get_initial_db)
+# scrapping data
+documents = scrape_france_culture(get_initial_db)
+# sending episode data to MongoDB
+db = MongoDB(filename="./database/database.ini", section="mongodb")
+db.connect()
+db.send_files(database="podcast_project", collection="episodes",list_files= documents)
+
 
 ##############################    Creatng FastAPI API   ##########################
 api = FastAPI()
