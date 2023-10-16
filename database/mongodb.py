@@ -103,25 +103,26 @@ class MongoDB:
                 "No document to send to MongoDB"
                 f" or some documents are already in MongoDB {self.current_db.name}.{collection}"
             )
-        self.current_db.get_collection(collection).create_index(
-            [("episode_url", DESCENDING)], unique = True
-        )
-        print(
-            f"We have {self.current_db.get_collection(collection).count_documents({})}"
-            f" documents in MongoDB {self.current_db.name}.{collection}"
-        )
-        try:
-            self.current_db.get_collection(collection).insert_many(list_files)
+        else:
+            self.current_db.get_collection(collection).create_index(
+                [("episode_url", DESCENDING)], unique = True
+            )
             print(
                 f"We have {self.current_db.get_collection(collection).count_documents({})}"
                 f" documents in MongoDB {self.current_db.name}.{collection}"
             )
-        except BulkWriteError as error:
-            # pymongo throws an error on 1st doc to create a write clash,
-            # so data after index may not have been added yet.
-            index_already_in_db = error.details["writeErrors"][0]["index"]
-            # recursive call to send remaining data.
-            self.send_files(database, collection, list_files[index_already_in_db+1:])
+            try:
+                self.current_db.get_collection(collection).insert_many(list_files)
+                print(
+                    f"We have {self.current_db.get_collection(collection).count_documents({})}"
+                    f" documents in MongoDB {self.current_db.name}.{collection}"
+                )
+            except BulkWriteError as error:
+                # pymongo throws an error on 1st doc to create a write clash,
+                # so data after index may not have been added yet.
+                index_already_in_db = error.details["writeErrors"][0]["index"]
+                # recursive call to send remaining data.
+                self.send_files(database, collection, list_files[index_already_in_db+1:])
 
 
 
