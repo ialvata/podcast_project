@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 import requests
 import json
 from sqlalchemy.orm import Session
@@ -9,7 +9,7 @@ from pydantic_models.podcasts import (
     Podcast as Podcast_Pydantic,
     PodcastOut as Podcast_Pydantic_Out
 )
-
+from typing import Any
 
 FRANCE_CULTURE_URL = "https://www.radiofrance.fr"
 
@@ -26,7 +26,7 @@ def episodes_urls(podcast_url:str)-> list[str]:
         list_ep.append(episode_url)
     return list_ep
 
-def episodes_content(episode_url:str)-> list[dict[str,str]]:
+def episodes_content(episode_url:str)-> dict[str,Any]:
     page = requests.get(episode_url)
     soup = BeautifulSoup(page.content, 'html.parser')
     results = soup.find_all(
@@ -35,9 +35,12 @@ def episodes_content(episode_url:str)-> list[dict[str,str]]:
     json_content = []
     for result in results:
         json_content.append(json.loads(result.string))
-    return json_content
+    return {
+        "episode_url": episode_url,
+        "json_content": json_content
+    }
 
-def scrape_france_culture(db_session:Session)-> list:
+def scrape_france_culture(db_session:Session)-> list[dict[str,Any]]:
     # import all podcast urls from postgres db
     stmt =(
         select(Podcasts_SQL)
@@ -50,7 +53,7 @@ def scrape_france_culture(db_session:Session)-> list:
         for row in db_session.execute(stmt)
     ]
     # scrape each podcast episodes urls
-    with ProcessPoolExecutor(max_workers=8) as pool:
+    with ThreadPoolExecutor(max_workers=8) as pool:
         episodes_list = []
         for urls in  pool.map(episodes_urls,podcasts_list):
             episodes_list += [episodes_content(url) for url in urls]
