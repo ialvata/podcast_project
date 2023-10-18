@@ -12,9 +12,10 @@ from database.schemas import (
     Episodes as Episodes_SQL
 )
 from sqlalchemy import and_, or_
+from api.utilities.constants import clean_str
 
 router = APIRouter(prefix="/episodes", tags=["Episodes"])
-@router.get('', 
+@router.post('', 
             status_code=status.HTTP_200_OK, 
             response_model=list[EpisodeOut]
 )
@@ -33,9 +34,11 @@ async def list_episodes(
             f"Absence of criteria! Either give podcast_title or search_episode_title.",
         )
     if search_episode_title is not None:
-        conditions = conditions + [Episodes_SQL.title.contains(search_episode_title)]
+        conditions = conditions + [Episodes_SQL.title.contains(
+            clean_str(search_episode_title)
+        )]
     if podcast_title is not None:
-        conditions = conditions + [Episodes_SQL.podcast_title==podcast_title]
+        conditions = conditions + [Episodes_SQL.podcast_title==clean_str(podcast_title)]
     stmt =(
             select(Episodes_SQL)
             .where(*conditions)
