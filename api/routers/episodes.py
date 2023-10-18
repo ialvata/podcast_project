@@ -1,7 +1,7 @@
 import json
 from typing import Optional
 from pathlib import Path
-from api.utilities.constants import podcasts_dict
+from utilities.constants import podcasts_dict
 from fastapi import APIRouter, Depends,HTTPException, status
 from pydantic_models.episodes import EpisodeOut
 from database.connecting_orm import database_gen
@@ -12,7 +12,7 @@ from database.schemas import (
     Episodes as Episodes_SQL
 )
 from sqlalchemy import and_, or_
-from api.utilities.constants import clean_str
+from utilities.constants import clean_str
 
 router = APIRouter(prefix="/episodes", tags=["Episodes"])
 @router.post('', 

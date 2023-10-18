@@ -10,7 +10,7 @@ from sqlalchemy import select
 from sqlalchemy import or_
 from pydantic_models.episodes import Episode as Episodes_Pydantic
 import dateutil.parser
-from api.utilities.constants import clean_str
+from utilities.constants import clean_str
 
 
 def transfer_france_culture_from_mongodb_to_postgres(
