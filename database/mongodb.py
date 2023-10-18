@@ -26,7 +26,7 @@ def check_connection(class_method):
         if not isinstance(args[0].conn, MongoClient):
             raise ConnectFirstError()
         else:
-            class_method(*args, **kwargs)
+            return class_method(*args, **kwargs)
         
     return wrapper
 
@@ -124,28 +124,62 @@ class MongoDB:
                 # recursive call to send remaining data.
                 self.send_files(database, collection, list_files[index_already_in_db+1:])
 
-
+    @check_connection
+    def search_episodes(self, database:str, collection:str, podcasts:list[str],
+                        search_key:str) -> dict[str, Any]:
+        self.conn:MongoClient
+        self.current_db = PyMongo_Database(client= self.conn, name= database)
+        if podcasts == []:
+            raise Exception(" No podcast name given! Please give the name of a Podcast")
+        else:
+            collection_table = self.current_db.get_collection(collection)
+            results = {}
+            for podcast in podcasts:
+                documents = [
+                    document
+                    for document in collection_table.find(
+                        {f"{search_key}": {"$regex":f"{podcast}"}}
+                    )
+                ]
+                results[f"{podcast}"] = documents
+            return results
 
 
 if __name__ == "__main__":
-    import datetime
-    post_1 = {
-        "episode_url": "mike.com",
-        "text": "My first blog post!",
-        "tags": ["mongodb", "python", "pymongo"],
-        "date": datetime.datetime.now(tz=datetime.timezone.utc),
-    }
-    post_2 = {
-        "episode_url": "john.com",
-        "text": "My 2nd blog post!",
-        "tags": ["mongodb", "python", "pymongo"],
-        "date": datetime.datetime.now(tz=datetime.timezone.utc),
-    }
+    ######################                unit test                         ###################
+    # import datetime
+    # post_1 = {
+    #     "episode_url": "mike.com",
+    #     "text": "My first blog post!",
+    #     "tags": ["mongodb", "python", "pymongo"],
+    #     "date": datetime.datetime.now(tz=datetime.timezone.utc),
+    # }
+    # post_2 = {
+    #     "episode_url": "john.com",
+    #     "text": "My 2nd blog post!",
+    #     "tags": ["mongodb", "python", "pymongo"],
+    #     "date": datetime.datetime.now(tz=datetime.timezone.utc),
+    # }
+    # db = MongoDB(filename="./database/database.ini", section="mongodb")
+    # print(isinstance(db, DataBase))  # True
+    # db.connect()
+    # db.send_files(database="test_database",collection="episodes",
+    #               list_files= [post_1,post_2])
+    # db.search_episodes(database="test_database",collection="episodes",
+    #                    search_key="episode_url", podcasts=["mike.com"])
+######################                unit test                         ###################
     db = MongoDB(filename="./database/database.ini", section="mongodb")
     print(isinstance(db, DataBase))  # True
     db.connect()
-    db.send_files(database="test_database",collection="episodes",
-                  list_files= [post_1,post_1, post_2])
+    findings = db.search_episodes(database="podcast_project",collection="episodes",
+                       search_key="episode_url", 
+                       podcasts=[
+                           "cultures-monde","concordance-des-temps","affaires-etrangeres",
+                           "entendez-vous-l-eco"
+                        ]
+                    )
+    total=0
+    for value in findings.values():
+        total += len(value)
+    print(f"We found a total of {total} docs in MongoDB")
     print("OLA")
-    # print(mongodb.my_episodes.delete_many({}))
-    # print(mongodb.my_episodes.count_documents({})) # 0

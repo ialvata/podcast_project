@@ -44,7 +44,7 @@ def scrape_france_culture(db_session:Session)-> list[dict[str,Any]]:
     # import all podcast urls from postgres db
     stmt =(
         select(Podcasts_SQL)
-        .where(Podcasts_SQL.publisher == "France Culture")
+        .where(Podcasts_SQL.publisher == "france culture")
     )
 
     podcasts_list = [

@@ -17,8 +17,10 @@ if get_initial_db.query(schemas.Podcasts).all() == []:
     print(f"Creating Podcasts table in {schemas.Base}")
     init_db(get_initial_db)
 # scrapping data
+print("Scrapping data")
 documents = scrape_france_culture(get_initial_db)
 # sending episode data to MongoDB
 db = MongoDB(filename="./database/database.ini", section="mongodb")
 db.connect()
+print("Sending data to MongoDB")
 db.send_files(database="podcast_project", collection="episodes",list_files= documents)

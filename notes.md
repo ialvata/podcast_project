@@ -26,7 +26,7 @@ To Activate our server app:
 
 PGAdmin4 container is launched automatically by docker compose command.
     - http://localhost:5050/  #the port may be overwritten in .env.local.db file
-    - The admin user is root.
+    - The container's admin user is root.
     - The Postgres db is automatically added. When you access pgadmin website, you only need to 
     introduce the db's password, which was defined in the environmental configuration file.
 MongoDB
