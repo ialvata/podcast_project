@@ -10,7 +10,7 @@ from database.schemas import (
 )
 from pydantic_models.podcasts import Podcast as Podcasts_Pydantic
 from pydantic_models.episodes import Episode as Episodes_Pydantic
-from api.utilities.constants import podcasts_dict, episodes_list
+from utilities.constants import podcasts_dict, episodes_list
 from sqlalchemy.orm import Session
 import dateutil.parser
 
