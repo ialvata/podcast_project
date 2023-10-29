@@ -1,21 +1,34 @@
-function episodesList(name){
-    const body = {"podcast_name": name};
+function episodesList(){
+  try {
+    const gallery = document.getElementById('gallery');
+    const podcast_title = gallery.getAttribute("podcast");
+    const body = {"podcast_title": podcast_title};
     console.log("body: " + body);
-    fetch("/list_episodes",{method:"POST",
+    fetch("/episodes",{method:"POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(body)
     })
-      .then(res => res.json())
-      .then((data) => {
-        let names = data["list_episodes_names"];
-        let urls = data["list_episodes_url"];
-        let EpisodeListTuples = [];
-        for (let i=0; i < urls.length; i++) {
-          var tuple = [names[i], urls[i]];
-          EpisodeListTuples.push(tuple);
-        }
-        setEpisodeList(EpisodeListTuples);
-        // setEpisodeListURLs(data["list_episodes_url"]);
-        // console.log("episode_list_data: " + data);
-      })
+    .then(res => res.json())
+    .then((episodes_list) => {
+      episodes_list.forEach((episode) => {
+          // creating card
+          const card = document.createElement('div');
+          card.className = "card dark-background";
+          // Creating a title
+          const title = document.createElement('h2');
+          title.textContent = `Title: ${episode["title"]}`;
+          // Creating a description
+          const paragraph = document.createElement('p');
+          paragraph.textContent = `Description${episode["title"]}`;
+          // Append the title and paragraph to the card
+          card.appendChild(title);
+          card.appendChild(paragraph);
+          gallery.appendChild(card);
+      });
+    })} catch (error) {
+      // Log the error
+      console.error("Error:", error);
   }
+}
+
+episodesList();
