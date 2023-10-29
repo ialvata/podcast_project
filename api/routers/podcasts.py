@@ -2,7 +2,7 @@
 import json
 from typing import Optional
 from pathlib import Path
-from api.utilities.constants import podcasts_dict
+from utilities.constants import podcasts_dict
 from fastapi import APIRouter, Depends,HTTPException, status
 from pydantic_models.podcasts import (
     Podcast as Podcast_Pydantic,
