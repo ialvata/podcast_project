@@ -13,8 +13,10 @@ from database.schemas import (
 )
 from sqlalchemy import and_, or_
 from utilities.constants import clean_str
+import requests
 
 router = APIRouter(prefix="/episodes", tags=["Episodes"])
+
 @router.post('', 
             status_code=status.HTTP_200_OK, 
             response_model=list[EpisodeOut]
@@ -52,3 +54,20 @@ async def list_episodes(
     ]
     return episodes_list
 
+@router.post('/download', 
+            status_code=status.HTTP_200_OK
+)
+async def download_episode(
+    url_audio: str,
+    episode_title:str = "test",
+
+):  
+    episode_title = clean_str(episode_title).replace("/","_")
+    response = requests.get(url_audio)
+    if response.status_code == 200:
+        with open(f"/home/ivo/Downloads/{episode_title}", 'wb') as file:
+            file.write(response.content)
+        print(f"Downloaded to /home/ivo/Downloads/")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+    return response.status_code

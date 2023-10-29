@@ -1,16 +1,15 @@
 body {
+    background-color: #06de8fc4; 
     background-image:linear-gradient(to bottom right, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("../images/jeremy-bishop-1braZySlEKA-unsplash.jpg");
     /* margin: 0; */
     /* background-position: center; */
     background-size: cover;
     background-position: center;
-    height: 100%;
-    width: 100%;
     background-attachment: fixed;
 }
 
 .btn {
-    background-color: rgba(30, 255, 60, 0.5);
+    background-color: rgba(30, 150, 255, 0.5);
     border: none;
     color: white;
     padding: 12px 30px;
@@ -48,7 +47,16 @@ body {
   }
 
 .title {
+    color: rgb(71, 216, 158);
+}
+
+.description {
     color: lightgrey;
+}
+
+.gallery_cultures_monde{
+    position:absolute;
+    top: 60px; /* Position the navbar at the top of the page */
 }
 .topnav {
     /* overflow: hidden; */
