@@ -22,10 +22,10 @@ def init_db(db_session: Session):
     print("Creating podcast list")
     podcasts = [
         Podcasts_Pydantic(
-            title=podcast["title"],
+            title=podcast["title"].lower(),
             url=podcast["url"],
-            publisher=str(podcast["publisher"]),
-            language=podcast["language"]
+            publisher=str(podcast["publisher"]).lower(),
+            language=podcast["language"].lower()
         )
         for podcast in podcasts_dict.values()
     ]
@@ -36,22 +36,22 @@ def init_db(db_session: Session):
         db_session.add(Podcasts_SQL(**(podcast.dict())))
         db_session.commit()
     ############################           episodes           ###############################
-    print("Creating episodes list")
-    episodes = [
-        Episodes_Pydantic(
-            podcast_title=episode["podcast_title"],
-            title=episode["title"],
-            description=episode["description"],
-            date=dateutil.parser.isoparse(episode["date"]),
-            director=episode["director"],
-            url_audio=episode["url_audio"]
-        )
-        for episode in episodes_list
-    ]
-    print("Adding Episodes and committing them")
-    for episode in episodes:
-        # time_sleep(uniform(0, 1))
-        print(f"Episode with title->{episode.title}")
-        db_session.add(Episodes_SQL(**(episode.dict())))
-    db_session.commit()
-    print("Initialized the db")
+    # print("Creating episodes list")
+    # episodes = [
+    #     Episodes_Pydantic(
+    #         podcast_title=episode["podcast_title"],
+    #         title=episode["title"],
+    #         description=episode["description"],
+    #         date=dateutil.parser.isoparse(episode["date"]),
+    #         director=episode["director"],
+    #         url_audio=episode["url_audio"]
+    #     )
+    #     for episode in episodes_list
+    # ]
+    # print("Adding Episodes and committing them")
+    # for episode in episodes:
+    #     # time_sleep(uniform(0, 1))
+    #     print(f"Episode with title->{episode.title}")
+    #     db_session.add(Episodes_SQL(**(episode.dict())))
+    # db_session.commit()
+    # print("Initialized the db")

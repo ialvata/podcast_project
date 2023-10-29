@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+import unicodedata
+import re
+
 PROJ_PATH = Path('.').cwd()
 PROJ_DATA = PROJ_PATH/"data"
 FOLDER_PATH_AFFAIRES = str(PROJ_DATA/"affaires_etrangeres")
@@ -15,29 +18,34 @@ URL_CONCORDANCE = "https://www.radiofrance.fr/franceculture/podcasts/concordance
 URL_CULTURE = "https://www.radiofrance.fr/franceculture/podcasts/cultures-monde"
 URL_ECO = "https://www.radiofrance.fr/franceculture/podcasts/entendez-vous-l-eco"
 
+def clean_str(string:str) -> str:
+    pattern = r'[!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~]'
+    return re.sub(pattern, '', 
+                  unicodedata.normalize("NFKD", string)).lower().strip()
+
 podcasts_dict = {
     "affaires":{
-        "publisher":"France Culture",
+        "publisher":clean_str("France Culture"),
         "url":URL_AFFAIRES,
-        "title":"Affaires Étrangères",
+        "title":clean_str("Affaires Étrangères"),
         "language": "french"
     },
     "concordance":{
-        "publisher":"France Culture",
+        "publisher":clean_str("France Culture"),
         "url":URL_CONCORDANCE,
-        "title":"Concordance des Temps",
+        "title":clean_str("Concordance des Temps"),
         "language": "french"
     },
     "culture":{
-        "publisher":"France Culture",
+        "publisher":clean_str("France Culture"),
         "url":URL_CULTURE,
-        "title":"Cultures Monde",
+        "title":clean_str("Cultures Monde"),
         "language": "french"
     },
     "eco":{
-        "publisher":"France Culture",
+        "publisher":clean_str("France Culture"),
         "url":URL_ECO,
-        "title":"Entendez-vous l'éco?",
+        "title":clean_str("entendez-vous l'éco ?"),
         "language": "french"
     },     
 }

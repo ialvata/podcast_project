@@ -1,7 +1,7 @@
 import json
 from typing import Optional
 from pathlib import Path
-from api.utilities.constants import podcasts_dict
+from utilities.constants import podcasts_dict
 from fastapi import APIRouter, Depends,HTTPException, status
 from pydantic_models.episodes import EpisodeOut
 from database.connecting_orm import database_gen
@@ -12,6 +12,7 @@ from database.schemas import (
     Episodes as Episodes_SQL
 )
 from sqlalchemy import and_, or_
+from utilities.constants import clean_str
 
 router = APIRouter(prefix="/episodes", tags=["Episodes"])
 @router.post('', 
@@ -33,9 +34,11 @@ async def list_episodes(
             f"Absence of criteria! Either give podcast_title or search_episode_title.",
         )
     if search_episode_title is not None:
-        conditions = conditions + [Episodes_SQL.title.contains(search_episode_title)]
+        conditions = conditions + [Episodes_SQL.title.contains(
+            clean_str(search_episode_title)
+        )]
     if podcast_title is not None:
-        conditions = conditions + [Episodes_SQL.podcast_title==podcast_title]
+        conditions = conditions + [Episodes_SQL.podcast_title==clean_str(podcast_title)]
     stmt =(
             select(Episodes_SQL)
             .where(*conditions)
