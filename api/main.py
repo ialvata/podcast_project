@@ -24,19 +24,22 @@ api.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-################                   Adding Backend Endpoints                ####################
+################                   Adding Backend Routers                ####################
 api.include_router(podcasts.router)
 api.include_router(episodes.router)
 
 ################                   Serving Webpage                ####################
-static_path = Path("./frontend/static").absolute()
-templates = Jinja2Templates(directory="./frontend")
+parent_path = Path("./frontend")
+static_path = (parent_path/"static").absolute()
+js_path = (parent_path/"js/scripts").absolute()
+templates = Jinja2Templates(directory="./frontend/html")
 api.mount(str(static_path), StaticFiles(directory=str(static_path)), name="static")
-
+api.mount(str(js_path), StaticFiles(directory=str(js_path)), name="javascript")
 
 @api.get("/", response_class=HTMLResponse)
 async def render_webpage(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    # return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("france_culture.html", {"request": request})
 
 if __name__ == "__main__":
     uvicorn.run("main:api", host="localhost", port=8001, reload=True)

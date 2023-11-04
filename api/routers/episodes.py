@@ -16,7 +16,6 @@ from utilities.constants import clean_str
 import requests
 
 router = APIRouter(prefix="/episodes", tags=["Episodes"])
-
 @router.post('', 
             status_code=status.HTTP_200_OK, 
             response_model=list[EpisodeOut]

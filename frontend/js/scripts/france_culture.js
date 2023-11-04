@@ -1,3 +1,26 @@
+import { episodesList} from "./episodes.js"; // do not remove .js, we need this!
+
+document.addEventListener('readystatechange', event => {
+    switch (document.readyState) {
+      case "loading":
+        console.log("document.readyState: ", document.readyState,
+         `- The document is still loading.`
+        );
+        break;
+      case "interactive":
+        console.log("document.readyState: ", document.readyState, 
+          `- The document has finished loading DOM. `,
+          `- "DOMContentLoaded" event`
+        );
+        break;
+      case "complete":
+        console.log("document.readyState: ", document.readyState, 
+          `- The page DOM with Sub-resources are now fully loaded. `,
+          `- "load" event`
+        );
+        break;
+    }
+});
 document.addEventListener("DOMContentLoaded", function () {
     const dropdownButton = document.querySelector(".dropbtn");
     const dropdownContainer = document.getElementById("dropdown_content");
@@ -12,7 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // <a href="podcasts/france_culture.html?podcast=cultures%20monde">Cultures Monde</a>
         for ( let podcast of france_culture_podcasts){
             const anchor = document.createElement('a');
-            anchor.href = `podcasts/france_culture.html?podcast=${podcast.text}`;
+            // anchor.href = `france_culture.html`;
+            anchor.podcast = podcast.text
             anchor.textContent = podcast.title
             dropdownContainer.appendChild(anchor)
         }
@@ -36,4 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
             dropdownContainer.style.display = "none";
         }
     });
-})
+    dropdownContainer.addEventListener("click", function (event) {
+        episodesList(event.target.podcast)
+    });
+});
