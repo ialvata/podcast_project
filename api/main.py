@@ -44,5 +44,10 @@ async def render_index(request: Request):
 async def render_france_culture(request: Request):
     return templates.TemplateResponse("france_culture.html", {"request": request})
 
+@api.get('/favicon.ico')
+async def favicon():
+    file_name = "favicon.ico"
+    return FileResponse(path=static_path/"images"/file_name, headers={"Content-Disposition": "attachment; filename=" + file_name})
+
 if __name__ == "__main__":
     uvicorn.run("main:api", host="localhost", port=8001, reload=True)
