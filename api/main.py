@@ -37,8 +37,11 @@ api.mount(str(static_path), StaticFiles(directory=str(static_path)), name="stati
 api.mount(str(js_path), StaticFiles(directory=str(js_path)), name="javascript")
 
 @api.get("/", response_class=HTMLResponse)
-async def render_webpage(request: Request):
-    # return templates.TemplateResponse("index.html", {"request": request})
+async def render_index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@api.get("/france_culture", response_class=HTMLResponse)
+async def render_france_culture(request: Request):
     return templates.TemplateResponse("france_culture.html", {"request": request})
 
 if __name__ == "__main__":
