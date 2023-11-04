@@ -1,3 +1,4 @@
+<!doctype html>
 <html><head>
     <!-- Standard Meta -->
     <meta charset="utf-8">
@@ -5,28 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <!-- Site Properities -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
-    <link rel="stylesheet" type="text/css" href="../static/css/cultures_monde.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/france_culture.css') }}">
+    <script type="module" src="{{ url_for('javascript', path='france_culture.js') }}"></script>
+    <script type="module" src="{{ url_for('javascript', path='episodes.js') }}"></script>
+    <!-- <script type="module" src="../js/scripts/france_culture.js"></script> -->
   </head>
 <body>
   <div id= "myTopnav" class="topnav">
-    <a href="../index.html">Main</a>
+    <a href="http://localhost:8001">Main</a>
     <div class="dropdown">
       <button class="dropbtn">France Culture
         <i class="fa fa-caret-down"></i>
       </button>
-      <div class="dropdown-content">
-        <a href="podcasts/cultures_monde.html">Cultures Monde</a>
-        <a href="france_culture.html/#affaires_etrangeres">Affaires Étrangères</a>
-        <a href="france_culture.html/#entendez_eco">Entendez-vous l'éco?</a>
-        <a href="france_culture.html/#">Concordance des Temps</a>
-      </div>
+      <div class="dropdown-content" id="dropdown_content"></div>
     </div>
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
   </div>
-  <div class="gallery_cultures_monde" id="gallery" podcast="cultures monde">
-    <script type="text/javascript" src="../js/scripts/episodes.js"></script>
-  </div>
+  <div class="gallery_podcast" id="gallery" podcast="cultures monde"></div>
 </body>
 </html>
 

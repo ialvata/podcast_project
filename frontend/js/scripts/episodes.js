@@ -1,4 +1,4 @@
-function test_alert() {
+export function test_alert() {
   alert('Button clicked!');
 }
 
@@ -20,15 +20,17 @@ function downloadEpisode(episode_title,url_audio){
     }})
   .catch(error => console.log('error', error));
 }
-function episodesList(){
+export function episodesList(podcast_title){
   try {
     const gallery = document.getElementById('gallery');
-    const podcast_title = gallery.getAttribute("podcast");
+    // const podcast_title = gallery.getAttribute("podcast");
+    gallery.innerHTML = ''; // clean gallery
     var requestOptions = {
       method: 'POST',
     };
+    console.log('podcast_title -> ', podcast_title)
     var url = encodeURI(`http://localhost:8001/episodes?podcast_title=${podcast_title}`)
-    var url_all = `http://localhost:8001/episodes?`
+    // var url_all = `http://localhost:8001/episodes?`
     fetch(url, requestOptions)
     .then(response => response.json())
     .then((episodes_list) => {
@@ -64,4 +66,4 @@ function episodesList(){
   }
 }
 
-episodesList();
+// episodesList();
