@@ -5,7 +5,12 @@
 
 #### About
 In this project, I create a web app, whose purpose is to webscrape information regarding some non-english speaking podcasts (e.g. France Culture), save that semi-structured data in a non-SQL Document Database (MongoDB), and then structure some of that data into a SQL database (PostgreSQL). This web app is served through Python's FastAPI framework. In the future, I'll add an object storage volume, à la AWS S3, and then add several NLP related features, such as transcribing audio files (Speach to Text), and translate this text into another language.
+<div align="center">
+    <img src="https://github.com/ialvata/podcast_project/assets/110241614/f93dc6dc-d046-4173-b947-a49fc119e0d1" width="75%">
+</div>
+<br></br>
 
+#### Tech Stack
 | **Open Source** | ![BSD 3-clause](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)
 |---|---|
 | **Tech Stack** | ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi) ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white) |
