@@ -23,28 +23,13 @@ body {
   }
 
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    /* background-color: #333333b3; */
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+  width: 30%;
+  background-color: #333333b3;
+  margin: 8px;
+  padding: 8px;
+  justify-content: space-around;
 }
-
-.column {
-    float: left;
-    width: 33.3%;
-    margin-left: 16px;
-    margin-bottom: 16px;
-    padding: 0 8px;
-    height: max-content;
-  }
-
-/* .column::after{
-    content: "";
-    clear: both;
-    display: table;
-} */
-  
-.dark-background{
-    background-color: #333333b3;
-  }
 
 .title {
     color: rgb(71, 216, 158);
@@ -57,7 +42,12 @@ body {
 .gallery_podcast{
     position:absolute;
     top: 60px; /* Position the navbar at the top of the page */
+    resize: horizontal;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
 }
+
 .topnav {
     background-color: #3b694483;
     position: fixed; /* Set the navbar to fixed position */
@@ -126,13 +116,7 @@ body {
     z-index: 1000;
     cursor: pointer;
 }
-/* .dropdown:hover .dropdown-content{
-    display: block;
-} */
-/* .dropdown-content:hover {
-    background-color: #ddd;
-    display: block;
-} */
+
 /* Add a grey background color to dropdown links on hover */
 .dropdown-content a:hover {
     background-color: #d7cdaa;
