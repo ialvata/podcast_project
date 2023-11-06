@@ -37,7 +37,7 @@ export function episodesList(podcast_title){
       episodes_list.forEach((episode) => {
           // creating card
           const card = document.createElement('div');
-          card.className = "card dark-background column";
+          card.className = "card";
           // Creating a title
           const title = document.createElement('h2');
           title.textContent = episode["title"];
