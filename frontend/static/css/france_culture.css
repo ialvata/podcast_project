@@ -24,20 +24,12 @@ body {
 
 .card {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
-  height: max-content;
-  width: auto;
+  width: 30%;
   background-color: #333333b3;
-  flex: 0.5;
   margin: 8px;
   padding: 8px;
   justify-content: space-around;
 }
-
-/* .card::after{
-    content: "";
-    clear: both;
-    display: table;
-} */
 
 .title {
     color: rgb(71, 216, 158);
